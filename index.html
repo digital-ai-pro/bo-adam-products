@@ -1,14 +1,18 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar-AE" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Bo Adam — باقة المنتجات الرقمية</title>
-    <meta name="description" content="حوّل مهاراتك لمنتجات رقمية مربحة — باقة Bp Adam" />
+    <meta name="description" content="حوّل مهاراتك لمنتجات رقمية مربحة — باقة Bo Adam" />
     <meta name="theme-color" content="#111827" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fbbf24'/><text x='50' y='58' font-size='48' text-anchor='middle' fill='%23000' font-family='Arial'>BO</text></svg>">
+    <!-- خطوط جميلة للاستخدام العربي (Tajawal + Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+      html { font-family: 'Cairo', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+      .brand-font { font-family: 'Tajawal', 'Cairo', sans-serif; }
       /* بسيط لتحسين درجات الشفافية والظلال على الخلفيات الداكنة */
       .bg-white\/3 { background-color: rgba(255,255,255,0.03); }
       .bg-white\/5 { background-color: rgba(255,255,255,0.05); }
@@ -27,9 +31,12 @@
       </div>
       <nav class="hidden md:flex gap-6 items-center">
         <a href="#features" class="text-sm opacity-80 hover:underline">المزايا</a>
-        <a href="#testimonials" class="text-sm opacity-80 hover:underline">الشهادات</a>
+        <a href="products.html" class="text-sm opacity-80 hover:underline">المنتجات</a>
+        <a href="#testimonials" class="text-sm opacity-80 hover:underline">آراء الناس</a>
         <a href="#faq" class="text-sm opacity-80 hover:underline">الأسئلة</a>
+        <a href="admin.html" class="text-sm opacity-80 hover:underline">لوحة التحكم</a>
         <button id="buyTop" type="button" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold shadow hover:scale-105 transition-transform">احصل على الباقة — قوالب + بونصات</button>
+        <button id="themeToggle" class="ml-2 px-3 py-2 rounded-lg bg-gray-800 text-yellow-300">☀️</button>
       </nav>
     </header>
 
@@ -37,7 +44,7 @@
     <section class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center py-12">
       <div>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-          حوّل مهاراتك لمنتجات رقمية مربحة — بأسلوب <span class="text-yellow-400">Bo Adam</span>
+          حوّل مهاراتك لمنتجات رقمية مربحة — بأسلوب <span class="text-yellow-400">الBo Adam</span>
         </h1>
         <p class="mt-6 text-lg opacity-85">
           باقة كاملة من القوالب والإستراتيجيات لنبش مشروعك الرقمي، من العنوان إلى صفحة الدفع على
@@ -54,8 +61,8 @@
             <div class="text-yellow-400 font-bold">★ ★ ★ ★ ★</div>
           </div>
           <div>
-            <div class="text-sm font-medium">4.9 / 5 — بناءً على 1,240 تقييم</div>
-            <div class="text-xs opacity-70">+3,520 مشتري سعيد • متوسط سرعة التطبيق: 2.5 ساعة</div>
+            <div class="text-sm font-medium">4.9 / 5 — بناءً على 5,415 تقييم</div>
+            <div class="text-xs opacity-70">+3,712 مشتري سعيد • متوسط سرعة التطبيق: 2.5 ساعة</div>
           </div>
         </div>
 
@@ -126,7 +133,7 @@
           <div class="mt-6 flex gap-3 justify-between items-center">
             <div>
               <div class="text-xs opacity-70">السعر</div>
-              <div class="text-2xl font-extrabold"> درهم 60<span class="text-sm opacity-70">/ دفعة واحدة</span></div>
+              <div class="text-2xl font-extrabold">د.إ 185 <span class="text-sm opacity-70">/ دفعة وحدة</span></div>
             </div>
             <button id="buyMock" type="button" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold">احصل على الباقة الآن</button>
           </div>
@@ -134,45 +141,28 @@
       </div>
     </section>
 
-    <!-- Testimonials -->
+    <!-- Testimonials + review form -->
     <section id="testimonials" class="max-w-6xl mx-auto px-6 py-10">
-      <h3 class="text-2xl font-bold">ماذا قال المشتركون</h3>
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-6 bg-white\/3 rounded-2xl shadow">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center font-bold text-black">أ</div>
-            <div>
-              <div class="font-semibold">أحمد محمد</div>
-              <div class="text-xs opacity-70">مؤسس رقمي</div>
-            </div>
-          </div>
-          <p class="mt-4 text-sm opacity-90">"المنتج غيّر طريقة شغلي، قوالب جاهزة وترتيب بيع سهل جداً — مبيعاتي ارتفعت 3x!"</p>
-          <div class="mt-4 text-yellow-400">★ ★ ★ ★ ★</div>
-        </div>
+      <h3 class="text-2xl font-bold">آراء الناس وتجاربهم</h3>
+      <div id="reviewsContainer" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- reviews rendered by JS -->
+      </div>
 
-        <div class="p-6 bg-white\/3 rounded-2xl shadow">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center font-bold text-black">س</div>
-            <div>
-              <div class="font-semibold">سارة علي</div>
-              <div class="text-xs opacity-70">مبتدئة في التسويق</div>
-            </div>
-          </div>
-          <p class="mt-4 text-sm opacity-90">"تابعت الخطوات وطبقتها في أسبوع — وفعلاً حصلت أول بيع!"</p>
-          <div class="mt-4 text-yellow-400">★ ★ ★ ★ ★</div>
-        </div>
-
-        <div class="p-6 bg-white\/3 rounded-2xl shadow">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center font-bold text-black">ي</div>
-            <div>
-              <div class="font-semibold">يوسف خالد</div>
-              <div class="text-xs opacity-70">Freelancer</div>
-            </div>
-          </div>
-          <p class="mt-4 text-sm opacity-90">"القوالب والمنهجية وفّرت عليّ شهور من التجارب. أنصح جداً."</p>
-          <div class="mt-4 text-yellow-400">★ ★ ★ ★ ★</div>
-        </div>
+      <div class="mt-8 p-6 bg-white/5 rounded-2xl">
+        <h4 class="font-semibold">شارك رأيك</h4>
+        <p class="text-sm opacity-80 mt-2">اكتب اسمك، قيّم الباقة، وحط تعليق — رح يظهر على الصفحة.</p>
+        <form id="reviewForm" class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input id="revName" required placeholder="اسمك" class="p-3 rounded-md bg-gray-800/60" />
+          <select id="revRating" class="p-3 rounded-md bg-gray-800/60">
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★</option>
+            <option value="3">★★★</option>
+            <option value="2">★★</option>
+            <option value="1">★</option>
+          </select>
+          <textarea id="revText" required placeholder="اكتب رأيك هنا" class="p-3 rounded-md bg-gray-800/60 md:col-span-3"></textarea>
+          <button type="submit" class="px-4 py-3 rounded-xl bg-yellow-400 text-black font-semibold md:col-span-3">أرسل تقييم</button>
+        </form>
       </div>
     </section>
 
@@ -181,10 +171,10 @@
       <div class="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-black border border-gray-800 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
           <h4 class="text-xl font-bold">عرض خاص — الباقة الكاملة</h4>
-          <p class="text-sm opacity-80 mt-2">كل القوالب + دليل الخطة + بونصات قابلة للتحميل — ضمان 7 ايام استرداد.</p>
+          <p class="text-sm opacity-80 mt-2">كل القوالب + دليل الخطة + بونصات قابلة للتحميل — ضمان 14 يوم استرداد.</p>
         </div>
         <div class="flex items-center gap-4">
-          <div class="text-2xl font-extrabold"> درهم 60</div>
+          <div class="text-2xl font-extrabold">$49</div>
           <button id="buyOffer" type="button" class="px-5 py-3 rounded-xl bg-yellow-400 text-black font-semibold">احصل على العرض — القوالب جاهزة للتحميل</button>
         </div>
       </div>
@@ -230,60 +220,59 @@
     </div>
 
     <script>
-      // ضع هنا رابط المنتج النهائي إن أردت تغييره من مكان واحد
-      const PRODUCT_LINK = "https://gomrod.com/your-product-link";
+      // Local data key
+      const STORAGE_KEY = 'lp_tiraz_data_v1';
+
+      const DEFAULT_DATA = {
+        settings: { title: 'Bo Adam', currency: 'د.إ' },
+        products: [
+          { id: 'p1', name: 'باقة صفحة هبوط', desc: 'قالب صفحة هبوط جاهز + دليل التخصيص', price: 'د.إ 70', link: 'https://gomrod.com/product-landing' },
+          { id: 'p2', name: 'باقة الإيميلات', desc: 'سلسلة إيميلات جاهزة للتحويل', price: 'د.إ 35', link: 'https://gomrod.com/product-emails' },
+          { id: 'p3', name: 'باقة البونصات', desc: 'قوالب قابلة للطباعة وبونصات تسويقية', price: 'د.إ 55', link: 'https://gomrod.com/product-bonus' }
+        ],
+        reviews: []
+      };
+
+      function loadData(){ try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(DEFAULT_DATA)); }catch(e){ return JSON.parse(JSON.stringify(DEFAULT_DATA)); } }
+      function saveData(d){ localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+      let appData = loadData();
       document.getElementById('year').textContent = new Date().getFullYear();
 
-      // مصفوفة المنتجات — حدّث الروابط والنصوص هنا لكل منتج
-      const products = [
-        { id: 'p1', name: 'باقة صفحة هبوط', desc: 'قالب صفحة هبوط جاهز + دليل التخصيص', price: '$19', link: 'https://gomrod.com/product-landing' },
-        { id: 'p2', name: 'باقة الإيميلات', desc: 'سلسلة إيميلات جاهزة للتحويل', price: '$9', link: 'https://gomrod.com/product-emails' },
-        { id: 'p3', name: 'باقة البونصات', desc: 'قوالب قابلة للطباعة وبونصات تسويقية', price: '$15', link: 'https://gomrod.com/product-bonus' },
-      ];
-
-      // عناصر CTA العامة
+      // CTAs redirect to products page
       const ctaIds = ['buyTop','buyHero','buyMock','buyOffer'];
       ctaIds.forEach(id => {
         const el = document.getElementById(id);
-        if(el){
-          el.addEventListener('click', () => openProductModal());
-        }
+        if(el){ el.addEventListener('click', ()=>{ window.location.href = 'products.html'; }); }
       });
 
-      // فتح/إغلاق المودال وملء المنتجات
+      // Product modal rendering (also reads from appData.products)
       const modal = document.getElementById('productModal');
       const modalBackdrop = document.getElementById('modalBackdrop');
       const modalClose = document.getElementById('modalClose');
       const productList = document.getElementById('productList');
 
-      function openProductModal(){
-        renderProducts();
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      }
-
-      function closeProductModal(){
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      }
-
+      function openProductModal(){ renderProducts(); modal.classList.remove('hidden'); modal.classList.add('flex'); }
+      function closeProductModal(){ modal.classList.add('hidden'); modal.classList.remove('flex'); }
       modalBackdrop?.addEventListener('click', closeProductModal);
       modalClose?.addEventListener('click', closeProductModal);
 
       function renderProducts(){
-        productList.innerHTML = ''; // تفريغ سابق
-        products.forEach(p => {
+        productList.innerHTML = '';
+        const ps = appData.products || [];
+        if(ps.length === 0){ productList.innerHTML = '<div class="p-4 rounded-md bg-gray-800/50">ما فيه منتجات</div>'; return; }
+        ps.forEach(p => {
           const card = document.createElement('div');
-          card.className = 'p-4 rounded-xl bg-white\/3';
+          card.className = 'p-4 rounded-xl bg-white/3';
           card.innerHTML = `
             <div class="flex items-start justify-between gap-3">
               <div>
-                <div class="font-semibold">${p.name}</div>
-                <div class="text-sm opacity-80 mt-1">${p.desc}</div>
-                <div class="text-sm opacity-70 mt-2">${p.price}</div>
+                <div class="font-semibold">${escapeHtml(p.name)}</div>
+                <div class="text-sm opacity-80 mt-1">${escapeHtml(p.desc)}</div>
+                <div class="text-sm opacity-70 mt-2">${escapeHtml(p.price)}</div>
               </div>
               <div class="flex flex-col items-end gap-2">
-                <a href="${p.link}" target="_blank" rel="noreferrer" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold">اشتري ${p.name}</a>
+                <a href="${escapeHtml(p.link||'#')}" target="_blank" rel="noreferrer" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold">اشتري</a>
               </div>
             </div>
           `;
@@ -291,11 +280,58 @@
         });
       }
 
-      // اختياري: إغلاق بالمفتاح Escape
-      document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeProductModal(); });
+      function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
+
+      // Reviews rendering and submission
+      const reviewsContainer = document.getElementById('reviewsContainer');
+      function renderReviews(){
+        reviewsContainer.innerHTML = '';
+        const revs = appData.reviews || [];
+        if(revs.length === 0){ reviewsContainer.innerHTML = '<div class="p-6 bg-white/3 rounded-2xl">ما فيه تقييمات بعد — كن أول اللي يشارك رأيه.</div>'; return; }
+        revs.slice().reverse().forEach(r=>{
+          const card = document.createElement('div');
+          card.className = 'p-6 bg-white/3 rounded-2xl shadow';
+          card.innerHTML = `
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center font-bold text-black">${escapeHtml((r.name||'م').slice(0,1))}</div>
+              <div>
+                <div class="font-semibold">${escapeHtml(r.name)}</div>
+                <div class="text-xs opacity-70">${new Date(r.at).toLocaleDateString('ar-AE')}</div>
+              </div>
+            </div>
+            <p class="mt-4 text-sm opacity-90">${escapeHtml(r.text)}</p>
+            <div class="mt-4 text-yellow-400">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+          `;
+          reviewsContainer.appendChild(card);
+        });
+      }
+
+      const reviewForm = document.getElementById('reviewForm');
+      if(reviewForm){
+        reviewForm.addEventListener('submit', e=>{
+          e.preventDefault();
+          const name = document.getElementById('revName').value.trim();
+          const rating = parseInt(document.getElementById('revRating').value,10)||5;
+          const text = document.getElementById('revText').value.trim();
+          if(!name || !text) return alert('الرجاء إدخال الاسم والنص');
+          appData.reviews = appData.reviews || [];
+          appData.reviews.push({ name, rating, text, at: Date.now() });
+          saveData(appData);
+          reviewForm.reset();
+          renderReviews();
+          alert('شكراً لتقييمك!');
+        });
+      }
+
+      // Theme toggle (dark/light) saved in localStorage
+      const THEME_KEY = 'lp_theme_v1';
+      const themeToggle = document.getElementById('themeToggle');
+      function applyTheme(t){ if(t==='light'){ document.documentElement.classList.remove('dark'); themeToggle.textContent='🌙'; } else { document.documentElement.classList.add('dark'); themeToggle.textContent='☀️'; } localStorage.setItem(THEME_KEY,t); }
+      applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+      themeToggle?.addEventListener('click', ()=> applyTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
+
+      // Initial render
+      renderProducts(); renderReviews();
     </script>
   </body>
 </html>
-
-
-
