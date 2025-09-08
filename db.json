@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "title": "طراز الجاحد",
+    "currency": "د.إ"
+  },
+  "products": [
+    { "id": "p1", "name": "باقة صفحة هبوط", "desc": "قالب صفحة هبوط جاهز + دليل التخصيص", "price": "د.إ 70", "link": "https://gomrod.com/product-landing" },
+    { "id": "p2", "name": "باقة الإيميلات", "desc": "سلسلة إيميلات جاهزة للتحويل", "price": "د.إ 35", "link": "https://gomrod.com/product-emails" },
+    { "id": "p3", "name": "باقة البونصات", "desc": "قوالب قابلة للطباعة وبونصات تسويقية", "price": "د.إ 55", "link": "https://gomrod.com/product-bonus" }
+  ],
+  "reviews": []
+}

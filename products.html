@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ar-AE" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>المنتجات — طراز الجاحد</title>
+    <meta name="theme-color" content="#111827" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>html{font-family:'Cairo',sans-serif}.bg-white\/3{background-color:rgba(255,255,255,0.03)}.brand-font{font-family:'Tajawal',sans-serif}</style>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
+    <header class="max-w-6xl mx-auto p-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-black font-bold">JG</div>
+        <div>
+          <div class="text-sm opacity-80 brand-font">طراز الجاحد</div>
+          <div class="text-xs opacity-60">المنتجات</div>
+        </div>
+      </div>
+      <nav class="flex gap-4 items-center">
+        <a href="index.html" class="text-sm opacity-80 hover:underline">الصفحة الرئيسية</a>
+        <a href="admin.html" class="text-sm opacity-80 hover:underline">لوحة التحكم</a>
+      </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-10">
+      <h1 class="text-3xl font-bold">قائمة المنتجات</h1>
+      <p class="text-sm opacity-80 mt-2">تقدر تشوف وتشتري المنتجات هنا.</p>
+
+      <div id="productsGrid" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </main>
+
+    <footer class="max-w-6xl mx-auto px-6 py-10 text-sm opacity-70">© <span id="year"></span> طراز الجاحد</footer>
+
+    <script src="public-api-client.js"></script>
+    <script>
+      const STORAGE_KEY = 'lp_tiraz_data_v1';
+      function loadLocal(){ try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : null }catch(e){return null} }
+      function render(products){
+        const grid = document.getElementById('productsGrid'); grid.innerHTML='';
+        if(!products || products.length===0){ grid.innerHTML = '<div class="p-6 bg-white/3 rounded-2xl">ما فيه منتجات بعد — زور لوحة التحكم لإضافة منتجات.</div>'; return; }
+        products.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'p-6 bg-white/3 rounded-2xl';
+          card.innerHTML = `
+            <div class="flex flex-col h-full justify-between">
+              <div>
+                <div class="text-lg font-semibold">${escapeHtml(p.name)}</div>
+                <div class="text-sm opacity-80 mt-2">${escapeHtml(p.desc)}</div>
+              </div>
+              <div class="mt-4 flex items-center justify-between">
+                <div class="text-xl font-extrabold">${escapeHtml(p.price || '')}</div>
+                <a href="${escapeHtml(p.link || '#')}" target="_blank" rel="noreferrer" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold">اشتري</a>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; }); }
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // try API first, fallback to localStorage
+      (async function(){
+        try{
+          if(window.apiClient){
+            const ps = await apiClient.fetchProducts();
+            if(ps && ps.length!==undefined){ render(ps); return; }
+          }
+          const local = loadLocal(); render((local && local.products) || []);
+        }catch(e){ const local = loadLocal(); render((local && local.products) || []); }
+      })();
+    </script>
+  </body>
+</html>

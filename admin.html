@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ar-AE" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>لوحة تحكم — طراز الجاحد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>html{font-family:'Cairo',sans-serif}.brand-font{font-family:'Tajawal',sans-serif}.bg-white\/3{background-color:rgba(255,255,255,0.03)}</style>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
+    <header class="max-w-6xl mx-auto p-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-black font-bold">JG</div>
+        <div>
+          <div class="text-sm opacity-80 brand-font">لوحة التحكم</div>
+          <div class="text-xs opacity-60">تحكم كامل في المنتجات والتقييمات</div>
+        </div>
+      </div>
+      <nav class="flex gap-4 items-center">
+        <a href="index.html" class="text-sm opacity-80 hover:underline">الصفحة الرئيسية</a>
+        <a href="products.html" class="text-sm opacity-80 hover:underline">المنتجات</a>
+      </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- login card -->
+      <section id="loginCard" class="p-6 bg-white/3 rounded-2xl md:col-span-2">
+        <h3 class="font-semibold text-lg">تسجيل دخول الأدمن</h3>
+        <div id="loginArea" class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input id="adminUser" placeholder="اسم المستخدم" class="p-3 rounded-md bg-gray-800/60" value="aboadam" />
+          <input id="adminPass" placeholder="كلمة المرور" type="password" class="p-3 rounded-md bg-gray-800/60" value="1992" />
+          <div class="flex gap-2">
+            <button id="loginBtn" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold">دخول</button>
+            <button id="logoutBtn" class="px-4 py-2 rounded-xl border hidden">خروج</button>
+          </div>
+        </div>
+        <div id="loginMsg" class="text-sm opacity-70 mt-2"></div>
+      </section>
+
+      <section class="p-6 bg-white/3 rounded-2xl admin-only">
+        <h3 class="font-semibold text-lg">إضافة / تعديل منتج</h3>
+        <form id="productForm" class="mt-4 grid gap-3">
+          <input id="prodId" placeholder="(اتركه فارغ لإضافة منتج جديد)" class="p-3 rounded-md bg-gray-800/60" />
+          <input id="prodName" placeholder="اسم المنتج" class="p-3 rounded-md bg-gray-800/60" />
+          <input id="prodPrice" placeholder="السعر (مثال: د.إ 70)" class="p-3 rounded-md bg-gray-800/60" />
+          <input id="prodLink" placeholder="رابط الشراء" class="p-3 rounded-md bg-gray-800/60" />
+          <textarea id="prodDesc" placeholder="وصف مختصر" class="p-3 rounded-md bg-gray-800/60"></textarea>
+          <div class="flex gap-2">
+            <button type="submit" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold">حفظ</button>
+            <button id="prodClear" type="button" class="px-4 py-2 rounded-xl border">مسح</button>
+          </div>
+        </form>
+      </section>
+
+  <section class="p-6 bg-white/3 rounded-2xl admin-only">
+        <h3 class="font-semibold text-lg">المنتجات الحالية</h3>
+        <div id="prodList" class="mt-4 space-y-3 max-h-96 overflow-auto"></div>
+      </section>
+
+  <section class="p-6 bg-white/3 rounded-2xl md:col-span-2 admin-only">
+        <h3 class="font-semibold text-lg">التقييمات</h3>
+        <div id="reviewsList" class="mt-4 space-y-3 max-h-80 overflow-auto"></div>
+        <div class="mt-4 flex gap-2">
+          <button id="reviewsClear" class="px-4 py-2 rounded-xl border">مسح التقييمات</button>
+          <button id="exportData" class="px-4 py-2 rounded-xl bg-yellow-400 text-black font-semibold">تنزيل نسخة JSON</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="max-w-6xl mx-auto px-6 py-10 text-sm opacity-70">© <span id="year"></span> طراز الجاحد — لوحة تحكم محلية</footer>
+
+  <script src="public-api-client.js"></script>
+    <script>
+      const STORAGE_KEY = 'lp_tiraz_data_v1';
+      const DEFAULT_DATA = { settings: { title: 'طراز الجاحد', currency: 'د.إ' }, products: [], reviews: [] };
+      async function loadData(){
+        try{
+          if(window.apiClient){ const remote = await apiClient.apiGet('/api/data'); if(remote) return remote; }
+        }catch(e){ /* ignore */ }
+        try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : DEFAULT_DATA }catch(e){return DEFAULT_DATA}
+      }
+      async function saveData(d){
+        try{ if(window.apiClient){ await apiClient.apiPost('/api/save-fallback', d).catch(()=>{}); } }catch(e){}
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+      }
+      let appData = await loadData();
+      document.getElementById('year').textContent = new Date().getFullYear();
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const loginMsg = document.getElementById('loginMsg');
+      const adminOnlyEls = document.querySelectorAll('.admin-only');
+
+      function setAdminVisible(v){ adminOnlyEls.forEach(el=> el.style.display = v ? '' : 'none'); logoutBtn.classList.toggle('hidden', !v); }
+
+      async function checkLogin(){
+        try{ const res = await apiClient.verify(); if(res && res.ok){ loginMsg.textContent = 'مسجل دخول كم: ' + (res.user && res.user.username); setAdminVisible(true); return true; } }catch(e){}
+        setAdminVisible(false); return false;
+      }
+
+      // initial check
+      await checkLogin();
+
+      loginBtn.addEventListener('click', async ()=>{
+        const u = document.getElementById('adminUser').value.trim();
+        const p = document.getElementById('adminPass').value.trim();
+        loginMsg.textContent = 'جاري التحقق...';
+        try{
+          const r = await apiClient.login(u,p);
+          if(r && r.token){ loginMsg.textContent = 'تم الدخول'; await checkLogin(); appData = await loadData(); renderProducts(); renderReviews(); return; }
+          loginMsg.textContent = 'فشل تسجيل الدخول';
+        }catch(e){ loginMsg.textContent = 'خطأ بالخادم'; }
+      });
+
+      logoutBtn.addEventListener('click', async ()=>{ await apiClient.logout(); loginMsg.textContent = 'تم الخروج'; setAdminVisible(false); });
+
+      // elements
+      const prodList = document.getElementById('prodList');
+      const prodForm = document.getElementById('productForm');
+      const prodId = document.getElementById('prodId');
+      const prodName = document.getElementById('prodName');
+      const prodPrice = document.getElementById('prodPrice');
+      const prodLink = document.getElementById('prodLink');
+      const prodDesc = document.getElementById('prodDesc');
+      const prodClear = document.getElementById('prodClear');
+      const reviewsList = document.getElementById('reviewsList');
+      const reviewsClear = document.getElementById('reviewsClear');
+      const exportData = document.getElementById('exportData');
+
+      function renderProducts(){
+        prodList.innerHTML = '';
+        if(!appData.products || appData.products.length === 0){ prodList.innerHTML = '<div class="p-4 rounded-md bg-gray-800/50">ما فيه منتجات بعد</div>'; return }
+        appData.products.forEach(p => {
+          const row = document.createElement('div');
+          row.className = 'p-3 bg-gray-800/50 rounded-md flex items-center justify-between';
+          row.innerHTML = `
+            <div>
+              <div class="font-semibold">${escapeHtml(p.name)}</div>
+              <div class="text-xs opacity-70">${escapeHtml(p.price || '')}</div>
+            </div>
+            <div class="flex gap-2">
+              <button data-id="${p.id}" class="editProd px-3 py-1 rounded-md border">تعديل</button>
+              <button data-id="${p.id}" class="delProd px-3 py-1 rounded-md border">حذف</button>
+            </div>
+          `;
+          prodList.appendChild(row);
+        });
+      }
+
+      function renderReviews(){
+        reviewsList.innerHTML = '';
+        if(!appData.reviews || appData.reviews.length === 0){ reviewsList.innerHTML = '<div class="p-4 rounded-md bg-gray-800/50">ما فيه تقييمات</div>'; return }
+        appData.reviews.slice().reverse().forEach((r,idx) => {
+          const el = document.createElement('div');
+          el.className = 'p-3 bg-gray-800/50 rounded-md';
+          el.innerHTML = `
+            <div class="flex items-center justify-between">
+              <div class="font-semibold">${escapeHtml(r.name)}</div>
+              <div class="text-xs opacity-70">${new Date(r.at).toLocaleString('ar-AE')}</div>
+            </div>
+            <div class="mt-1 text-sm opacity-90">${escapeHtml(r.text)}</div>
+            <div class="mt-2 text-yellow-400">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+            <div class="mt-2 text-right"><button data-idx="${idx}" class="delReview px-3 py-1 rounded-md border">حذف</button></div>
+          `;
+          reviewsList.appendChild(el);
+        });
+      }
+
+      function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; }); }
+
+      // form submit (create/update) - use API when available
+      prodForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const id = prodId.value.trim() || Math.random().toString(36).slice(2,9);
+        const item = { id, name: prodName.value.trim(), price: prodPrice.value.trim(), link: prodLink.value.trim(), desc: prodDesc.value.trim() };
+        if(window.apiClient){
+          try{
+            const existing = (await apiClient.fetchProducts()).find(p=>p.id===id);
+            if(existing) await apiClient.apiPut('/api/products/'+id, item);
+            else await apiClient.apiPost('/api/products', item);
+            appData = await loadData();
+            renderProducts();
+            prodForm.reset();
+            return;
+          }catch(err){ console.warn('API product save failed, falling back to local', err); }
+        }
+        // fallback local
+        appData.products = appData.products || [];
+        const existing = appData.products.find(p=>p.id===id);
+        if(existing) Object.assign(existing, item); else appData.products.push(item);
+        await saveData(appData);
+        renderProducts(); prodForm.reset();
+      });
+
+      prodClear.addEventListener('click', ()=> prodForm.reset());
+
+      // delegate edit/delete
+      prodList.addEventListener('click', async (e)=>{
+        if(e.target.classList.contains('editProd')){
+          const id = e.target.dataset.id; const p = (appData.products||[]).find(x=>x.id===id);
+          if(!p) return; prodId.value = p.id; prodName.value = p.name; prodPrice.value = p.price; prodLink.value = p.link; prodDesc.value = p.desc; window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        if(e.target.classList.contains('delProd')){
+          const id = e.target.dataset.id;
+          if(window.apiClient){ try{ await apiClient.apiDelete('/api/products/'+id); appData = await loadData(); renderProducts(); return; }catch(e){ console.warn('delete product api failed',e); } }
+          appData.products = appData.products.filter(x=>x.id!==id); await saveData(appData); renderProducts();
+        }
+      });
+
+      // reviews delete
+      reviewsList.addEventListener('click', async (e)=>{
+        if(e.target.classList.contains('delReview')){
+          const idx = parseInt(e.target.dataset.idx,10);
+          const realIdx = appData.reviews.length - 1 - idx;
+          const at = appData.reviews[realIdx].at;
+          if(window.apiClient){ try{ await apiClient.apiDelete('/api/reviews/'+at); appData = await loadData(); renderReviews(); return; }catch(e){ console.warn('delete review api failed', e); } }
+          appData.reviews.splice(realIdx,1); await saveData(appData); renderReviews();
+        }
+      });
+
+      reviewsClear.addEventListener('click', async ()=>{ if(confirm('تمسح كل التقييمات؟')){ if(window.apiClient){ try{ const revs = appData.reviews || []; for(const r of revs) await apiClient.apiDelete('/api/reviews/'+r.at); appData = await loadData(); renderReviews(); return; }catch(e){ console.warn('clear reviews api failed',e); } } appData.reviews = []; await saveData(appData); renderReviews(); } });
+
+      exportData.addEventListener('click', ()=>{ const blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'tiraz-data.json'; a.click(); URL.revokeObjectURL(url); });
+
+      // initial render
+      renderProducts(); renderReviews();
+    </script>
+  </body>
+</html>
